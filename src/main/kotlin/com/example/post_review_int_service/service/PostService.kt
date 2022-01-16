@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
 import org.springframework.web.reactive.function.client.WebClient
+import org.springframework.web.reactive.function.client.bodyToMono
+import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 
 @Service
@@ -29,6 +31,24 @@ class PostService(
                     }
             }
             .bodyToMono(Posts::class.java)
+    }
+
+    fun getPostForUser(userId:String, page:Long, size: Long):Mono<List<Posts>>{
+        return webClient
+            .get()
+            .uri{
+                it
+                    .scheme("http")
+                    .host("localhost")
+                    .port(8080)
+                    .path("/api/v1/post/$userId")
+                    .queryParam("page", page)
+                    .queryParam("size", size)
+                    .build()
+            }
+            .retrieve()
+            .bodyToMono<List<Posts>>()
+            .log()
     }
 
 }
