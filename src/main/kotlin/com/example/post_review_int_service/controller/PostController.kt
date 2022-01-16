@@ -37,4 +37,21 @@ class PostController(
             .log()
     }
 
+    @PutMapping("/{userId}")
+    fun updatePost(@PathVariable userId: String, @RequestBody posts: Mono<Posts>):
+            Mono<ResponseEntity<Posts>>{
+        return postService
+            .updatePost(userId, posts)
+            .map {
+                ResponseEntity(it, HttpStatus.OK)
+            }
+            .log()
+    }
+
+    @DeleteMapping("/{postId}")
+    fun deletePost(@PathVariable postId: String):Mono<Void>{
+        return postService
+            .deletePost(postId)
+    }
+
 }
