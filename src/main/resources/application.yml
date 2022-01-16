@@ -1,6 +1,7 @@
 server:
   port: 8082
 
+
 post:
   scheme: http
   host: localhost
@@ -14,3 +15,10 @@ review:
   port: 8081
   path: /api/v1/post_comment
   baseUrl: http://localhost:8081/api/v1/post_comment
+
+spring:
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: fb_database
